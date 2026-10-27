@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Consórcio ou financiamento? Compare o custo do seu carro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0A2540;
+  --navy-2:#12365C;
+  --bg:#F3F5F8;
+  --ink:#14213D;
+  --mute:#5B6B7F;
+  --line:#DDE3EA;
+  --line-2:#EEF1F5;
+  --card:#FFFFFF;
+  --cons:#1F6FB2;
+  --fin:#C98A1B;
+  --btn:#0F5FA8;
+  --btn-h:#0B4C88;
+  --err:#B3261E;
+  --ok:#1B7F4B;
+  --wa:#25D366;
+  --radius:10px;
+  --shadow:0 1px 2px rgba(10,37,64,.06),0 8px 24px rgba(10,37,64,.07);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+
+/* Topo */
+.top{background:var(--navy);color:#fff;border-bottom:3px solid var(--cons)}
+.top .in{max-width:880px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;letter-spacing:.2px}
+.brand i{width:28px;height:28px;border-radius:6px;background:#fff;display:grid;place-items:center}
+.brand i svg{width:16px;height:16px;fill:var(--navy)}
+.sec{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;color:#B9C8DA}
+.sec svg{width:14px;height:14px;fill:#B9C8DA}
+
+/* Faixa de título */
+.hero{background:linear-gradient(180deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff;padding:36px 0 84px}
+.hero .in{max-width:880px;margin:0 auto;padding:0 20px}
+.eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#8FB4DA;margin:0 0 10px}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:0 0 12px;font-weight:800;letter-spacing:-.015em;max-width:20em}
+.lead{color:#C7D4E3;margin:0;max-width:36em;font-size:16.5px}
+
+.wrap{max-width:880px;margin:-56px auto 0;padding:0 20px 110px;position:relative}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+.card-h{display:flex;align-items:center;gap:10px;margin:0 0 20px;padding-bottom:14px;border-bottom:1px solid var(--line-2);font-weight:700;font-size:17px}
+.card-h span{width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:13px;display:grid;place-items:center;flex:none}
+
+label{display:block;font-weight:600;font-size:13.5px;margin:0 0 6px;color:var(--ink)}
+.row{display:grid;gap:18px;grid-template-columns:1fr 1fr}
+.row .full{grid-column:1/-1}
+@media(max-width:600px){.row{grid-template-columns:1fr}.card{padding:22px 18px}}
+input,select{width:100%;font:inherit;font-size:16.5px;padding:12px 14px;border-radius:8px;border:1px solid #C5CED9;background:#fff;color:var(--ink);transition:border-color .15s,box-shadow .15s}
+select{appearance:none;-webkit-appearance:none;padding-right:40px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%235B6B7F' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 14px center}
+input::placeholder{color:#97A3B2}
+input:hover,select:hover{border-color:#9AA8B8}
+input:focus,select:focus{outline:none;border-color:var(--btn);box-shadow:0 0 0 3px rgba(15,95,168,.18)}
+button:focus-visible,a:focus-visible{outline:3px solid var(--btn);outline-offset:2px}
+.hint{font-size:12.5px;color:var(--mute);margin-top:6px}
+.err{color:var(--err);font-size:14px;margin-top:10px;min-height:1.3em;font-weight:500}
+button.main{width:100%;margin-top:14px;font:inherit;font-weight:700;font-size:16.5px;padding:15px;border:0;border-radius:8px;background:var(--btn);color:#fff;cursor:pointer;transition:background .15s}
+button.main:hover{background:var(--btn-h)}
+button.main:active{transform:translateY(1px)}
+
+/* Resultado */
+#res{margin-top:24px;display:none}
+#res h2{font-size:20px;margin:0 0 14px;padding-bottom:14px;border-bottom:1px solid var(--line-2)}
+.verdict{display:flex;gap:12px;align-items:flex-start;background:#EEF5FB;border:1px solid #CFE0F0;border-left:4px solid var(--cons);border-radius:8px;padding:14px 16px;font-size:17px;font-weight:700;color:var(--navy);margin:0 0 24px}
+.bars{display:grid;gap:16px;margin-bottom:26px}
+.bar b{display:flex;justify-content:space-between;font-size:14px;font-weight:600;margin-bottom:6px}
+.bar b span:last-child{font-variant-numeric:tabular-nums;font-weight:700}
+.track{height:14px;background:var(--line-2);border-radius:999px;overflow:hidden}
+.fill{height:100%;width:0;border-radius:999px;transition:width .7s ease}
+.cols{display:grid;gap:18px;grid-template-columns:1fr 1fr}
+@media(max-width:600px){.cols{grid-template-columns:1fr}}
+.col{border:1px solid var(--line);border-top-width:4px;border-radius:8px;padding:16px 18px;background:#fff}
+.col h3{margin:0 0 10px;font-size:16px;font-weight:700}
+.col dl{margin:0}
+.col dt{font-size:12.5px;color:var(--mute);font-weight:500;padding-top:10px;border-top:1px solid var(--line-2)}
+.col dt:first-of-type{border-top:0;padding-top:0}
+.col dd{margin:2px 0 10px;font-weight:700;font-size:17px;font-variant-numeric:tabular-nums}
+.note{font-size:12.5px;color:var(--mute);margin:22px 0 0;padding-top:14px;border-top:1px solid var(--line-2)}
+.foot{margin-top:26px;font-size:12.5px;color:var(--mute);text-align:center}
+
+/* Modal */
+dialog{border:0;border-radius:12px;padding:0;width:min(450px,92vw);background:#fff;color:var(--ink);box-shadow:0 20px 60px rgba(10,37,64,.35);overflow:hidden}
+dialog::backdrop{background:rgba(10,37,64,.55)}
+.m-h{background:var(--navy);color:#fff;padding:20px 24px}
+dialog h2{margin:0 0 4px;font-size:19px;font-weight:700}
+dialog p{margin:0;color:#C7D4E3;font-size:14px}
+.m-b{padding:22px 24px 18px}
+.field{margin-bottom:16px}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--mute);margin:4px 0 6px;font-weight:400}
+.chk input{width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--btn)}
+.close{background:none;border:0;color:var(--mute);font:inherit;font-size:14px;width:100%;margin-top:6px;cursor:pointer;padding:8px}
+.close:hover{color:var(--ink);text-decoration:underline}
+.hp{position:absolute;left:-9999px;height:0;overflow:hidden}
+
+/* WhatsApp */
+.wa{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));width:58px;height:58px;border-radius:50%;background:var(--wa);display:grid;place-items:center;box-shadow:0 4px 14px rgba(0,0,0,.25);z-index:20;transition:transform .15s}
+.wa:hover{transform:scale(1.05)}
+.wa svg{width:32px;height:32px;fill:#fff}
+
+@media(prefers-reduced-motion:reduce){.fill,.wa,button.main{transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="in">
+    <div class="brand"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></i>Simulador de Veículos</div>
+    <div class="sec"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.3 8 11 4.6-1.7 8-6 8-11V5l-8-3Zm-1 14-4-4 1.4-1.4L11 13.2l4.6-4.6L17 10l-6 6Z"/></svg>Simulação sem compromisso</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="in">
+    <p class="eyebrow">Comparativo de crédito</p>
+    <h1>Consórcio ou financiamento: qual custa menos no seu carro?</h1>
+    <p class="lead">Informe o valor do carro e a entrada. Você vê a parcela e o total pago em cada modalidade.</p>
+  </div>
+</section>
+
+<main class="wrap">
+
+  <section class="card" aria-label="Simulação">
+    <div class="card-h"><span>1</span>Dados da simulação</div>
+    <div class="row">
+      <div>
+        <label for="valor">Valor do carro</label>
+        <input id="valor" inputmode="numeric" autocomplete="off" placeholder="R$ 0,00">
+        <div class="hint">Mínimo de R$ 40.000,00</div>
+      </div>
+      <div>
+        <label for="entrada">Valor da entrada</label>
+        <input id="entrada" inputmode="numeric" autocomplete="off" placeholder="R$ 0,00">
+        <div class="hint">Usada apenas no financiamento</div>
+      </div>
+      <div class="full">
+        <label for="prazoF">Prazo do financiamento</label>
+        <select id="prazoF"></select>
+      </div>
+    </div>
+    <div class="err" id="err1" role="alert"></div>
+    <button class="main" id="comparar" type="button">Comparar</button>
+  </section>
+
+  <section id="res" class="card" aria-live="polite">
+    <h2 id="resTit">Resultado</h2>
+    <div class="verdict" id="verdict"></div>
+    <div class="bars">
+      <div class="bar"><b><span>Consórcio</span><span id="tC"></span></b><div class="track"><div class="fill" id="bC" style="background:var(--cons)"></div></div></div>
+      <div class="bar"><b><span>Financiamento</span><span id="tF"></span></b><div class="track"><div class="fill" id="bF" style="background:var(--fin)"></div></div></div>
+    </div>
+    <div class="cols" id="cols"></div>
+    <p class="note">Simulação estimativa. Taxa do financiamento simulado de 1,79% a.m. IOF, tarifas e seguros não estão incluídos. Fale com um consultor para uma análise com os valores reais.</p>
+  </section>
+
+  <footer class="foot">As parcelas do consórcio são reajustadas anualmente pelo INPC.</footer>
+</main>
+
+<dialog id="modal" aria-labelledby="mTit">
+  <div class="m-h">
+    <h2 id="mTit">Quase lá! Para onde enviamos o resultado?</h2>
+    <p>Informe seus dados para ver a comparação completa.</p>
+  </div>
+  <div class="m-b">
+    <div class="field"><label for="nome">Nome</label><input id="nome" autocomplete="name" maxlength="80"></div>
+    <div class="field"><label for="zap">WhatsApp</label><input id="zap" inputmode="numeric" autocomplete="tel-national" placeholder="48 9 9999-9999" maxlength="14"></div>
+    <div class="hp" aria-hidden="true"><label>Não preencha<input id="site" tabindex="-1" autocomplete="on"></label></div>
+    <label class="chk"><input type="checkbox" id="lgpd"><span>Quero receber uma simulação oficial para este Consórcio.</span></label>
+    <div class="err" id="err2" role="alert"></div>
+    <button class="main" id="ver" type="button">Ver resultado</button>
+    <button class="close" id="fechar" type="button">Voltar</button>
+  </div>
+</dialog>
+
+<a class="wa" href="https://wa.me/5548920011614?text=Ol%C3%A1!%20Fiz%20a%20simula%C3%A7%C3%A3o%20de%20cons%C3%B3rcio%20x%20financiamento%20e%20quero%20mais%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.04 3C9.4 3 4 8.4 4 15.04c0 2.12.56 4.18 1.6 6L4 29l8.1-1.56a12 12 0 0 0 3.94.66C22.68 28.1 28 22.7 28 16.06 28 9.4 22.68 3 16.04 3Zm0 22.06c-1.24 0-2.44-.32-3.5-.94l-.5-.3-4.8.92.96-4.68-.34-.52a9.9 9.9 0 0 1-1.54-5.5c0-5.5 4.48-9.98 9.98-9.98 5.5 0 9.96 4.48 9.96 9.98 0 5.5-4.46 10.02-9.96 10.02Zm5.5-7.5c-.3-.16-1.78-.88-2.06-.98-.28-.1-.48-.16-.68.16-.2.3-.78.98-.96 1.18-.18.2-.36.22-.66.08-.3-.16-1.28-.48-2.44-1.5-.9-.8-1.5-1.8-1.68-2.1-.18-.3-.02-.46.14-.62.14-.14.3-.36.46-.54.14-.18.2-.3.3-.5.1-.2.04-.38-.02-.54-.08-.16-.68-1.64-.94-2.24-.24-.58-.5-.5-.68-.5h-.58c-.2 0-.54.08-.82.38-.28.3-1.08 1.06-1.08 2.58s1.1 3 1.26 3.2c.16.2 2.18 3.32 5.28 4.66.74.32 1.3.5 1.76.64.74.24 1.42.2 1.96.12.6-.1 1.78-.72 2.04-1.42.24-.7.24-1.3.18-1.42-.08-.12-.28-.2-.58-.34Z"/></svg>
+</a>
+
+<script>
+// ====== CONFIGURAÇÃO ======
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxP8bPiylgfwraC-LkTdPj6xv0FP-hFe41xYTa_junPNjU_8YpeHY1uBflTuF8oOvrW9w/exec"; // URL do app da web (termina em /exec)
+const CFG = { adm: 0.152, fundo: 0.01, prazoC: 90, juros: 0.0179, maxF: 60, min: 40000 };
+// ==========================
+
+const $ = id => document.getElementById(id);
+const brl = n => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+const pct = n => (n * 100).toLocaleString("pt-BR", { maximumFractionDigits: 2 }) + "%";
+const num = el => Number(el.value.replace(/\D/g, "")) / 100;
+let pend = null;
+
+for (let n = CFG.maxF; n >= 12; n -= 12) $("prazoF").add(new Option(n + " meses", n));
+
+["valor", "entrada"].forEach(id => $(id).addEventListener("input", e => {
+  const d = e.target.value.replace(/\D/g, "");
+  e.target.value = d ? brl(d / 100) : "";
+}));
+
+const maskZap = v => {
+  const d = v.replace(/\D/g, "").slice(0, 11);
+  let o = d.slice(0, 2);
+  if (d.length > 2) o += " " + d.slice(2, 3);
+  if (d.length > 3) o += " " + d.slice(3, 7);
+  if (d.length > 7) o += "-" + d.slice(7);
+  return o;
+};
+$("zap").addEventListener("input", e => { e.target.value = maskZap(e.target.value); });
+
+function calcular(v, e, n) {
+  // Consórcio: sem entrada, a carta é o valor total do carro
+  const adm = v * CFG.adm, fundo = v * CFG.fundo, totC = v + adm + fundo;
+  // Financiamento: entrada abatida, Tabela Price
+  const fin = v - e, i = CFG.juros;
+  const pF = fin * i / (1 - Math.pow(1 + i, -n));
+  return { fin, e, adm, fundo, parcC: totC / CFG.prazoC, totC, parcF: pF, totF: e + pF * n, n };
+}
+
+$("comparar").addEventListener("click", () => {
+  const v = num($("valor")), e = num($("entrada")), n = Number($("prazoF").value);
+  const m = $("err1");
+  if (v < CFG.min) { m.textContent = "O valor mínimo do carro é " + brl(CFG.min) + "."; return; }
+  if (e >= v) { m.textContent = "A entrada precisa ser menor que o valor do carro."; return; }
+  m.textContent = "";
+  pend = { v, e, r: calcular(v, e, n) };
+  $("err2").textContent = "";
+  $("modal").showModal();
+  $("nome").focus();
+});
+$("fechar").addEventListener("click", () => $("modal").close());
+
+$("ver").addEventListener("click", () => {
+  const nome = $("nome").value.trim(), zap = $("zap").value, m = $("err2");
+  const d = zap.replace(/\D/g, "");
+  if (nome.length < 2) { m.textContent = "Informe seu nome."; return; }
+  if (d.length !== 11 || d[2] !== "9") { m.textContent = "Informe o WhatsApp no formato 48 9 9999-9999."; return; }
+  if (!$("lgpd").checked) { m.textContent = "Marque a autorização para continuar."; return; }
+  m.textContent = "";
+  const { v, e, r } = pend;
+  const barato = r.totC <= r.totF ? "Consórcio" : "Financiamento";
+  const dif = Math.abs(r.totF - r.totC);
+  if (!$("site").value && !SCRIPT_URL.startsWith("COLE")) {
+    fetch(SCRIPT_URL, {
+      method: "POST", mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({
+        nome, whatsapp: zap, valorCarro: v, entrada: e, valorFinanciado: r.fin,
+        consorcioParcela: r.parcC, consorcioPrazo: CFG.prazoC, consorcioTotal: r.totC,
+        financiamentoParcela: r.parcF, financiamentoPrazo: r.n, financiamentoTotal: r.totF,
+        maisBarato: barato, diferenca: dif, consentimento: "Sim"
+      })
+    }).catch(() => {});
+  }
+  mostrar(nome, r, barato, dif);
+  $("modal").close();
+});
+
+function mostrar(nome, r, barato, dif) {
+  $("resTit").textContent = "Resultado para " + nome.split(" ")[0];
+  $("verdict").textContent = barato === "Consórcio"
+    ? "O consórcio custa " + brl(dif) + " a menos no total."
+    : "O financiamento custa " + brl(dif) + " a menos no total.";
+  $("tC").textContent = brl(r.totC);
+  $("tF").textContent = brl(r.totF);
+  const max = Math.max(r.totC, r.totF);
+  $("bC").style.width = "0"; $("bF").style.width = "0";
+  $("cols").innerHTML =
+    col("Consórcio", "var(--cons)", [
+      ["Parcela mensal", brl(r.parcC) + " × " + CFG.prazoC],
+      ["Taxa de administração (" + pct(CFG.adm) + ")", brl(r.adm)],
+      ["Fundo de reserva (" + pct(CFG.fundo) + ")", brl(r.fundo)],
+      ["Total pago", brl(r.totC)]
+    ]) +
+    col("Financiamento", "var(--fin)", [
+      ["Parcela mensal", brl(r.parcF) + " × " + r.n],
+      ["Entrada", brl(r.e)],
+      ["Total pago (com entrada)", brl(r.totF)]
+    ]);
+  $("res").style.display = "block";
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    $("bC").style.width = (r.totC / max * 100) + "%";
+    $("bF").style.width = (r.totF / max * 100) + "%";
+  }));
+  $("res").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+function col(t, cor, itens) {
+  return '<div class="col" style="border-top-color:' + cor + '"><h3>' + t + '</h3><dl>' +
+    itens.map(i => '<dt>' + i[0] + '</dt><dd>' + i[1] + '</dd>').join("") + '</dl></div>';
+}
+</script>
+</body>
+</html>
